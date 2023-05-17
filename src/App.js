@@ -1,25 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import MM from './mm'
+import VideoPlayer from './VIdeoPlayer'
+import TimeFrame from './TimeFrameSelect'
 
-function App() {
+const App = () => {
+  const videoLength = 100;
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+     <h1>React Video Player</h1>
+      <VideoPlayer />
+      {/* <TimeFrame duration={596.458333}></TimeFrame> */}
+      {/* <KK src='https://media.w3.org/2010/05/bunny/movie.ogv'></KK> */}
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
