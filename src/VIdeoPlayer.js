@@ -81,7 +81,6 @@ class VideoPlayer extends React.Component {
   };
 
   selectDot1=()=>{
-    // alert("jj")
     this.setState({arr1:[...this.state.arr1,this.state.currentTime]})
   }
 
@@ -110,13 +109,10 @@ class VideoPlayer extends React.Component {
     console.log("main", this.state.arr2.sort())
     console.log("end", this.state.arr3.sort())
   }
-  
+  timeLineWidth=1000
 
   render() {
     const { url, playing, currentTime, duration, currentTime1 ,currentTime2  } = this.state;
-    // console.log(currentTime,currentTime1, currentTime2);
-
-
     return (
       <div>
         <ReactPlayer
@@ -131,16 +127,14 @@ class VideoPlayer extends React.Component {
           onProgress={this.handleProgress}
           onDuration={this.handleDuration}
         />
-        {/* <button style={{marginRight:'10px'}} onClick={this.handlePlay}>Start</button>
-        <button onClick={this.handlePause}>Stop</button> */}
+
         <br></br> <br></br>
 
       {/* ------------------------ */}    
-        <div style={{width:'1400px',height:'3px',backgroundColor:'#f1f1f1',marginLeft:'2px', position: 'relative'}}></div>
         <div style={{display:'flex', marginLeft:'2px'}}>
         {
          this.state.arr1 && this.state.arr1.map((v,i)=>{
-          let x=v/duration*1400 
+          let x=v/duration*this.timeLineWidth 
           x=x-v/duration*2
 
             return(
@@ -150,14 +144,14 @@ class VideoPlayer extends React.Component {
         }  
         </div>
         <div style={{display:'flex'}}>
-          <TimeFrame style={{position: 'relative'}}  duration1={duration}></TimeFrame>
+          <TimeFrame timeLineWidth={this.timeLineWidth} duration1={duration}></TimeFrame>
           <span onClick={this.selectDot1} style={{height:'15px',  width:'15px', backgroundColor:'red',marginLeft:'2px'}}></span>
           <span onClick={this.deSelectFromArr1} style={{height:'15px',  width:'15px', backgroundColor:'black',marginLeft:'2px'}}></span>
         </div>
         
-        <div style={{display:'flex'}}>
+        <div style={{display:'flex', position:'relative'}}>
            <input className="slider" id="timelineSlider"
-           style={{height: '4px', fontSize:'4px',background: '#ccc', width:'1400px',position: 'absolute',top:'500px'}}
+           style={{height: '4px', fontSize:'4px',background: '#ccc', width:`${this.timeLineWidth}px`,position: 'absolute',top:'-20px'}}
              type="range"
              min={0}
              max={duration}
@@ -169,11 +163,10 @@ class VideoPlayer extends React.Component {
 
 
       {/* ------------------------ */}   
-        <div style={{width:'1400px',height:'3px',backgroundColor:'#f1f1f1',marginLeft:'2px', position: 'relative'}}></div>
           <div style={{display:'flex', marginLeft:'2px'}}>
           {
            this.state.arr2 && this.state.arr2.map((v,i)=>{
-            let x=v/duration*1400  
+            let x=v/duration*this.timeLineWidth  
             x=x-v/duration*2
               return(
                 <div style={{height:'4px',width:'2px',backgroundColor:'red',position:'absolute',marginLeft:`${x}px`}}></div>
@@ -182,12 +175,14 @@ class VideoPlayer extends React.Component {
           }  
          </div>      
         <div style={{display:'flex'}}>
-          <TimeFrame arr1={this.arr1} style={{position: 'relative'}} duration1={duration}></TimeFrame>
+          <TimeFrame timeLineWidth={this.timeLineWidth} arr1={this.arr1} duration1={duration}></TimeFrame>
            <span onClick={this.selectDot2} style={{height:'15px',  width:'15px', backgroundColor:'red',marginLeft:'2px'}}></span>
            <span onClick={this.deSelectFromArr2} style={{height:'15px',  width:'15px', backgroundColor:'black',marginLeft:'2px'}}></span>
         </div>
+
+      <div style={{display:'flex', position:'relative'}}>
         <input className="slider" id="timelineSlider"
-         style={{height: '4px', fontSize:'4px',background: '#ccc', width:'1400px', position: 'absolute',top:'536px'}}
+         style={{height: '4px', fontSize:'4px',background: '#ccc', width:`${this.timeLineWidth}px`, position: 'absolute',top:'-20px'}}
           type="range"
           min={0}
           max={duration}
@@ -195,14 +190,13 @@ class VideoPlayer extends React.Component {
           value={currentTime1}
           onChange={this.handleSeek1}
         />
-
+      </div>
 
       {/* ------------------------ */}   
-      <div style={{width:'1400px',height:'3px',backgroundColor:'#f1f1f1',marginLeft:'2px', position: 'relative'}}></div>
           <div style={{display:'flex', marginLeft:'2px'}}>
           {
            this.state.arr3 && this.state.arr3.map((v,i)=>{
-            let x=v/duration*1400  
+            let x=v/duration*this.timeLineWidth  
             x=x-v/duration*2
               return(
                 <div style={{height:'4px',width:'2px',backgroundColor:'red',position:'absolute',marginLeft:`${x}px`}}></div>
@@ -211,13 +205,14 @@ class VideoPlayer extends React.Component {
           }  
          </div>  
        <div style={{display:'flex'}}>
-         <TimeFrame style={{position: 'relative'}} duration1={duration}></TimeFrame>
+         <TimeFrame timeLineWidth={this.timeLineWidth} style={{position: 'relative'}} duration1={duration}></TimeFrame>
          <span onClick={this.selectDot3}  style={{height:'15px',  width:'15px', backgroundColor:'red',marginLeft:'2px'}}></span>
          <span onClick={this.deSelectFromArr3} style={{height:'15px',  width:'15px', backgroundColor:'black',marginLeft:'2px'}}></span>
         </div>
        
+      <div style={{display:'flex', position:'relative'}}>
         <input className="slider" id="timelineSlider"
-         style={{height: '4px', fontSize:'4px',background: '#ccc', width:'1400px', position: 'absolute',top:'569px'}}
+         style={{height: '4px', fontSize:'4px',background: '#ccc', width:`${this.timeLineWidth}px`, position: 'absolute',top:'-20px'}}
           type="range"
           min={0}
           max={duration}
@@ -225,6 +220,8 @@ class VideoPlayer extends React.Component {
           value={currentTime2}
           onChange={this.handleSeek2}
         />
+      </div>
+
     <br></br> <br></br>
     <div onClick={this.show} style={{backgroundColor:'black', color:'white', width:'200px', padding:'4px'}}>Show Times</div>
       </div>

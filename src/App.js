@@ -9,6 +9,7 @@ const App = () => {
     <div>
      <h1>React Video Player</h1>
       <VideoPlayer />
+      {/* <VideoPlayer /> */}
       {/* <TimeFrame duration={596.458333}></TimeFrame> */}
       {/* <KK src='https://media.w3.org/2010/05/bunny/movie.ogv'></KK> */}
     </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import './pp.css'
-const Timeline = ({ duration1, arr1 }) => {
+const Timeline = ({ duration1, arr1, timeLineWidth }) => {
   const stripeCount = parseInt(duration1/10) // Number of stripes based on a 10-second interval
                                                     //arr1 in to INT
   const stripes = [];
@@ -18,7 +18,7 @@ const Timeline = ({ duration1, arr1 }) => {
   return( 
     <div>
      
-      <div style={{width:'1400px',marginLeft:'2px',marginBottom:'2px'}}  className="timeline">{stripes}
+      <div style={{width:`${timeLineWidth}px`,marginLeft:'2px',marginBottom:'2px'}}  className="timeline">{stripes}
         
       </div>
     </div>
