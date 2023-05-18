@@ -18,9 +18,9 @@
   .slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 10px;
+    width: 2px;
     height: 10px;
-    background-color: #4CAF50;
+    background-color: #0a0a0a;
     cursor: pointer;
   }
   
@@ -31,6 +31,6 @@
     cursor: pointer;
   }
   
-  /* timeframe */
+  /* slimProgressBar */
 
- 
+  
