@@ -7,7 +7,7 @@ const App = () => {
   const videoLength = 100;
   return (
     <div>
-     <h1>React Video Player</h1>
+     <h3 style={{marginTop:'10px'}}></h3>
       <VideoPlayer />
       {/* <VideoPlayer /> */}
       {/* <TimeFrame duration={596.458333}></TimeFrame> */}

@@ -1,7 +1,5 @@
 import React from 'react';
 import ReactPlayer from 'react-player';
-// import { TimelineRangeSlider, TimelineRange } from '@artoonie/timeline-range-slider';
-// import '../timeline-range-slider/slider.css'
 import './ss.css'
 import TimeFrame from './TimeFrameSelect'
 
@@ -9,7 +7,7 @@ class VideoPlayer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      url: 'https://media.w3.org/2010/05/bunny/movie.ogv', // Replace with your video URL
+      url: 'https://media.w3.org/2010/05/bunny/movie.ogv',
       playing: false,
       currentTime: 0,
       currentTime1: 0,
@@ -21,7 +19,8 @@ class VideoPlayer extends React.Component {
       pl:false,
       arr1:[],
       arr2:[],
-      arr3:[]
+      arr3:[],
+      timeLineWidth:1000
     };
   }
 
@@ -35,17 +34,19 @@ class VideoPlayer extends React.Component {
   };
 
   handleProgress = (progress) => {
-    // alert('ss')
     if(this.state.ct && this.state.pl==false){
         this.setState({ currentTime: progress.playedSeconds });
+        this.setState({ pl: true });
     }
     if(this.state.ct1 && this.state.pl==false){
         this.setState({ currentTime1: progress.playedSeconds });
+        this.setState({ pl: true });
     }
     if(this.state.ct2 && this.state.pl==false){
         this.setState({ currentTime2: progress.playedSeconds });
+        this.setState({ pl: true });
     }
-    
+
   };
 
   handleDuration = (duration) => {
@@ -57,8 +58,7 @@ class VideoPlayer extends React.Component {
     this.setState({ct1:false})
     this.setState({ct2:false})
     this.setState({pl:false})
-    this.setState({playing:false})
-    // this.setState({arr1:[...this.state.arr1,e.target.value]})
+    // this.setState({playing:false})
     this.player.seekTo(parseFloat(e.target.value));
   };
 
@@ -67,7 +67,7 @@ class VideoPlayer extends React.Component {
     this.setState({ct:false})
     this.setState({ct2:false})
     this.setState({pl:false})
-    this.setState({playing:false})
+    // this.setState({playing:false})
     this.player.seekTo(parseFloat(e.target.value));
   };
 
@@ -76,7 +76,7 @@ class VideoPlayer extends React.Component {
     this.setState({ct1:false})
     this.setState({ct:false})
     this.setState({pl:false})
-    this.setState({playing:false})
+    // this.setState({playing:false})
     this.player.seekTo(parseFloat(e.target.value));
   };
 
@@ -109,7 +109,18 @@ class VideoPlayer extends React.Component {
     console.log("main", this.state.arr2.sort())
     console.log("end", this.state.arr3.sort())
   }
-  timeLineWidth=1000
+  changeWidthOfTimelineZoom=(e)=>{
+    console.log(e.target.value)
+    this.setState({timeLineWidth:this.state.timeLineWidth+200})
+  }
+
+  changeWidthOfTimelineZoomOut=(e)=>{
+    console.log(e.target.value)
+    if(this.state.timeLineWidth>1000){
+      this.setState({timeLineWidth:this.state.timeLineWidth-200})
+    }
+   
+  }
 
   render() {
     const { url, playing, currentTime, duration, currentTime1 ,currentTime2  } = this.state;
@@ -128,30 +139,41 @@ class VideoPlayer extends React.Component {
           onDuration={this.handleDuration}
         />
 
-        <br></br> <br></br>
-
-      {/* ------------------------ */}    
-        <div style={{display:'flex', marginLeft:'2px'}}>
+        <br></br> 
+        {/* <input className="slider2"
+          type="range"
+          min={0}
+          max={100}
+          onChange={this.changeWidthOfTimeline}
+        /> */}
+        <div style={{display:'flex', marginBottom:'5px', marginLeft:'5px'}}>
+          <div onClick={this.changeWidthOfTimelineZoom} style={{backgroundColor:'red', padding:'2px', width:'20px', paddingLeft:'10px',marginRight:'2px', cursor:'pointer'}}>+</div>
+          <div onClick={this.changeWidthOfTimelineZoomOut} style={{backgroundColor:'black', color:'white', padding:'2px',width:'20px', paddingLeft:'15px', paddingBottom:'7px', cursor:'pointer'}}>-</div>
+        </div>
+      {/* ------------------------ */}  
+<div style={{display:'flex'}}>    
+<div style={{backgroundColor:'black'}} className='scroll'>  
+        <div  style={{display:'flex',position:'relative', marginLeft:'2px',width:`${this.state.timeLineWidth}`}}>
         {
          this.state.arr1 && this.state.arr1.map((v,i)=>{
-          let x=v/duration*this.timeLineWidth 
-          x=x-v/duration*2
-
+          let x=v/duration*this.state.timeLineWidth 
+          x=x-v/duration*5
+            console.log("I",i)
             return(
-              <div style={{height:'5px',width:'2px',backgroundColor:'red',position:'absolute',marginLeft:`${x}px`}}></div>
+              <div style={{height:'5px',width:'5px',backgroundColor:'red',position:'absolute',marginLeft:`${x}px`}}></div>
             )
           })
         }  
         </div>
-        <div style={{display:'flex'}}>
-          <TimeFrame timeLineWidth={this.timeLineWidth} duration1={duration}></TimeFrame>
-          <span onClick={this.selectDot1} style={{height:'15px',  width:'15px', backgroundColor:'red',marginLeft:'2px'}}></span>
-          <span onClick={this.deSelectFromArr1} style={{height:'15px',  width:'15px', backgroundColor:'black',marginLeft:'2px'}}></span>
+        <div  style={{display:'flex'}}>
+          <TimeFrame timeLineWidth={this.state.timeLineWidth} duration1={duration}></TimeFrame>
+          {/* <span onClick={this.selectDot1} style={{height:'15px',  width:'15px', backgroundColor:'red',marginLeft:'2px'}}></span>
+          <span onClick={this.deSelectFromArr1} style={{height:'15px',  width:'15px', backgroundColor:'black',marginLeft:'2px'}}></span> */}
         </div>
         
         <div style={{display:'flex', position:'relative'}}>
            <input className="slider" id="timelineSlider"
-           style={{height: '4px', fontSize:'4px',background: '#ccc', width:`${this.timeLineWidth}px`,position: 'absolute',top:'-20px'}}
+           style={{height: '4px', fontSize:'4px',background: '#ccc', width:`${this.state.timeLineWidth}px`,position: 'absolute',top:'-20px'}}
              type="range"
              min={0}
              max={duration}
@@ -160,29 +182,30 @@ class VideoPlayer extends React.Component {
              onChange={this.handleSeek}
            />    
         </div>
+{/* <div>sssssssssssss</div> */}
 
-
-      {/* ------------------------ */}   
+     
+      {/* ------------------------ */}  
           <div style={{display:'flex', marginLeft:'2px'}}>
           {
            this.state.arr2 && this.state.arr2.map((v,i)=>{
-            let x=v/duration*this.timeLineWidth  
-            x=x-v/duration*2
+            let x=v/duration*this.state.timeLineWidth  
+            x=x-v/duration*5
               return(
-                <div style={{height:'4px',width:'2px',backgroundColor:'red',position:'absolute',marginLeft:`${x}px`}}></div>
+                <div style={{height:'5px',width:'5px',backgroundColor:'red',position:'absolute',marginLeft:`${x}px`}}></div>
               )
             })
           }  
          </div>      
         <div style={{display:'flex'}}>
-          <TimeFrame timeLineWidth={this.timeLineWidth} arr1={this.arr1} duration1={duration}></TimeFrame>
-           <span onClick={this.selectDot2} style={{height:'15px',  width:'15px', backgroundColor:'red',marginLeft:'2px'}}></span>
-           <span onClick={this.deSelectFromArr2} style={{height:'15px',  width:'15px', backgroundColor:'black',marginLeft:'2px'}}></span>
+          <TimeFrame timeLineWidth={this.state.timeLineWidth} arr1={this.arr1} duration1={duration}></TimeFrame>
+           {/* <span onClick={this.selectDot2} style={{height:'15px',  width:'15px', backgroundColor:'red',marginLeft:'2px'}}></span>
+           <span onClick={this.deSelectFromArr2} style={{height:'15px',  width:'15px', backgroundColor:'black',marginLeft:'2px'}}></span> */}
         </div>
 
       <div style={{display:'flex', position:'relative'}}>
         <input className="slider" id="timelineSlider"
-         style={{height: '4px', fontSize:'4px',background: '#ccc', width:`${this.timeLineWidth}px`, position: 'absolute',top:'-20px'}}
+         style={{height: '4px', fontSize:'4px',background: '#ccc', width:`${this.state.timeLineWidth}px`, position: 'absolute',top:'-20px'}}
           type="range"
           min={0}
           max={duration}
@@ -196,23 +219,23 @@ class VideoPlayer extends React.Component {
           <div style={{display:'flex', marginLeft:'2px'}}>
           {
            this.state.arr3 && this.state.arr3.map((v,i)=>{
-            let x=v/duration*this.timeLineWidth  
-            x=x-v/duration*2
+            let x=v/duration*this.state.timeLineWidth  
+            x=x-v/duration*5
               return(
-                <div style={{height:'4px',width:'2px',backgroundColor:'red',position:'absolute',marginLeft:`${x}px`}}></div>
+                <div style={{height:'5px',width:'5px',backgroundColor:'red',position:'absolute',marginLeft:`${x}px`}}></div>
               )
             })
           }  
          </div>  
        <div style={{display:'flex'}}>
-         <TimeFrame timeLineWidth={this.timeLineWidth} style={{position: 'relative'}} duration1={duration}></TimeFrame>
-         <span onClick={this.selectDot3}  style={{height:'15px',  width:'15px', backgroundColor:'red',marginLeft:'2px'}}></span>
-         <span onClick={this.deSelectFromArr3} style={{height:'15px',  width:'15px', backgroundColor:'black',marginLeft:'2px'}}></span>
+         <TimeFrame timeLineWidth={this.state.timeLineWidth} style={{position: 'relative'}} duration1={duration}></TimeFrame>
+         {/* <span onClick={this.selectDot3}  style={{height:'15px',  width:'15px', backgroundColor:'red',marginLeft:'2px'}}></span>
+         <span onClick={this.deSelectFromArr3} style={{height:'15px',  width:'15px', backgroundColor:'black',marginLeft:'2px'}}></span> */}
         </div>
        
       <div style={{display:'flex', position:'relative'}}>
         <input className="slider" id="timelineSlider"
-         style={{height: '4px', fontSize:'4px',background: '#ccc', width:`${this.timeLineWidth}px`, position: 'absolute',top:'-20px'}}
+         style={{height: '4px', fontSize:'4px',background: '#ccc', width:`${this.state.timeLineWidth}px`, position: 'absolute',top:'-20px'}}
           type="range"
           min={0}
           max={duration}
@@ -221,6 +244,25 @@ class VideoPlayer extends React.Component {
           onChange={this.handleSeek2}
         />
       </div>
+</div> 
+
+<div >
+         <div style={{display:'flex', marginTop:'4px'}}>
+          <div onClick={this.selectDot1} style={{height:'15px',  width:'15px', backgroundColor:'red',marginLeft:'2px'}}></div>
+          <div onClick={this.deSelectFromArr1} style={{height:'15px',  width:'15px', backgroundColor:'black',marginLeft:'2px'}}></div>
+         </div>
+         <div style={{display:'flex', marginTop:'17px'}}>
+         <span onClick={this.selectDot2} style={{height:'15px',  width:'15px', backgroundColor:'red',marginLeft:'2px'}}></span>
+         <span onClick={this.deSelectFromArr2} style={{height:'15px',  width:'15px', backgroundColor:'black',marginLeft:'2px'}}></span>
+         </div>
+         <div style={{display:'flex', marginTop:'17px'}}>
+         <span onClick={this.selectDot3}  style={{height:'15px',  width:'15px', backgroundColor:'red',marginLeft:'2px'}}></span>
+         <span onClick={this.deSelectFromArr3} style={{height:'15px',  width:'15px', backgroundColor:'black',marginLeft:'2px'}}></span>
+    
+         </div>
+</div>
+
+</div>  
 
     <br></br> <br></br>
     <div onClick={this.show} style={{backgroundColor:'black', color:'white', width:'200px', padding:'4px'}}>Show Times</div>

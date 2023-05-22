@@ -18,10 +18,14 @@
   .slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 2px;
+    width: 5px;
     height: 10px;
-    background-color: #0a0a0a;
+    background-color: #4CAF50;
     cursor: pointer;
+  }
+
+  .slider::-webkit-slider-thumb:hover {
+    width: 10px;
   }
   
   .slider::-moz-range-thumb {
@@ -33,4 +37,40 @@
   
   /* slimProgressBar */
 
+  .slider2 {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 10%;
+    height: 10px;
+    background-color: #888b88;
+    outline: none;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
   
+  .slider2::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 10px;
+    height: 10px;
+    background-color: #0a0a0a;
+    cursor: pointer;
+  }
+  
+  .slider2::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background-color: #4CAF50;
+    cursor: pointer;
+  }
+
+  /* scroll */
+
+div.scroll {
+    margin: 4px, 4px;
+    padding: 4px;
+    width: 900px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+}
