@@ -5,10 +5,8 @@ const Timeline = ({ duration1, arr1, timeLineWidth }) => {
                                                     //arr1 in to INT
   const stripes = [];
 
-
-
   for (let i = 0; i <= stripeCount; i++) {
-    stripes.push(<div key={i} className="stripe" ></div>);
+    stripes.push(<div key={i} className="stripe" ><div style={{fontSize:'10px',position:'relative',bottom:'13px', color:'white'}}>{i*10}</div></div>);
       
       if(i!=stripeCount){
         for(let j=0;j<9;j++){

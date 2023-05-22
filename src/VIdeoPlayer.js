@@ -7,7 +7,7 @@ class VideoPlayer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      url: 'https://media.w3.org/2010/05/bunny/movie.ogv',
+      url: 'https://www.youtube.com/watch?v=JJmcL1N2KQs',
       playing: false,
       currentTime: 0,
       currentTime1: 0,
@@ -20,10 +20,11 @@ class VideoPlayer extends React.Component {
       arr1:[],
       arr2:[],
       arr3:[],
-      timeLineWidth:1000
+      timeLineWidth:4000,
+      kl:true
     };
   }
-
+  // https://www.youtube.com/watch?v=JJmcL1N2KQs
   handlePlay = () => {
     this.setState({ playing: true });
     this.setState({ pl: true });
@@ -32,6 +33,8 @@ class VideoPlayer extends React.Component {
   handlePause = () => {
     this.setState({ playing: false });
   };
+
+
 
   handleProgress = (progress) => {
     if(this.state.ct && this.state.pl==false){
@@ -50,7 +53,7 @@ class VideoPlayer extends React.Component {
   };
 
   handleDuration = (duration) => {
-    this.setState({ duration });
+    this.setState({ duration,timeLineWidth:4000/590*duration });
   };
 
   handleSeek = (e) => {
@@ -116,14 +119,20 @@ class VideoPlayer extends React.Component {
 
   changeWidthOfTimelineZoomOut=(e)=>{
     console.log(e.target.value)
-    if(this.state.timeLineWidth>1000){
       this.setState({timeLineWidth:this.state.timeLineWidth-200})
-    }
-   
   }
+
+ setTimeline=(d)=>{
+  this.setState({timeLineWidth:4000/590*this.state.duration})
+  this.setState({kl:false})
+ }
+
+
 
   render() {
     const { url, playing, currentTime, duration, currentTime1 ,currentTime2  } = this.state;
+
+
     return (
       <div>
         <ReactPlayer
@@ -150,10 +159,11 @@ class VideoPlayer extends React.Component {
           <div onClick={this.changeWidthOfTimelineZoom} style={{backgroundColor:'red', padding:'2px', width:'20px', paddingLeft:'10px',marginRight:'2px', cursor:'pointer'}}>+</div>
           <div onClick={this.changeWidthOfTimelineZoomOut} style={{backgroundColor:'black', color:'white', padding:'2px',width:'20px', paddingLeft:'15px', paddingBottom:'7px', cursor:'pointer'}}>-</div>
         </div>
+        <br></br>
       {/* ------------------------ */}  
 <div style={{display:'flex'}}>    
 <div style={{backgroundColor:'black'}} className='scroll'>  
-        <div  style={{display:'flex',position:'relative', marginLeft:'2px',width:`${this.state.timeLineWidth}`}}>
+        <div  style={{display:'flex', marginTop:'10px',position:'relative', marginLeft:'2px',width:`${this.state.timeLineWidth}`}}>
         {
          this.state.arr1 && this.state.arr1.map((v,i)=>{
           let x=v/duration*this.state.timeLineWidth 
@@ -186,7 +196,7 @@ class VideoPlayer extends React.Component {
 
      
       {/* ------------------------ */}  
-          <div style={{display:'flex', marginLeft:'2px'}}>
+          <div style={{display:'flex', marginLeft:'2px', marginTop:'10px'}}>
           {
            this.state.arr2 && this.state.arr2.map((v,i)=>{
             let x=v/duration*this.state.timeLineWidth  
@@ -216,7 +226,7 @@ class VideoPlayer extends React.Component {
       </div>
 
       {/* ------------------------ */}   
-          <div style={{display:'flex', marginLeft:'2px'}}>
+          <div style={{display:'flex', marginLeft:'2px', marginTop:'10px'}}>
           {
            this.state.arr3 && this.state.arr3.map((v,i)=>{
             let x=v/duration*this.state.timeLineWidth  
