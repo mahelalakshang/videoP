@@ -2,6 +2,7 @@ import React from 'react';
 import ReactPlayer from 'react-player';
 import './ss.css'
 import TimeFrame from './TimeFrameSelect'
+import {MemoizedComponent} from './MemoizedComponent'
 
 class VideoPlayer extends React.Component {
   constructor(props) {
@@ -172,7 +173,7 @@ class VideoPlayer extends React.Component {
         }  
         </div>
         <div  style={{display:'flex'}}>
-          <TimeFrame timeLineWidth={this.state.timeLineWidth} duration1={duration}></TimeFrame>
+          <MemoizedComponent timeLineWidth={this.state.timeLineWidth} duration1={duration}></MemoizedComponent>
        </div>
         
         <div style={{display:'flex', position:'relative', width:`${this.state.timeLineWidth+5}px`, paddingBottom:'8px'}}>
@@ -200,7 +201,7 @@ class VideoPlayer extends React.Component {
           }  
          </div>      
         <div style={{display:'flex'}}>
-          <TimeFrame timeLineWidth={this.state.timeLineWidth} arr1={this.arr1} duration1={duration}></TimeFrame>
+          <MemoizedComponent timeLineWidth={this.state.timeLineWidth} arr1={this.arr1} duration1={duration}></MemoizedComponent>
        </div>
 
       <div style={{display:'flex', position:'relative',width:`${this.state.timeLineWidth+5}px`, paddingBottom:'8px'}}>
@@ -228,7 +229,7 @@ class VideoPlayer extends React.Component {
           }  
          </div>  
        <div style={{display:'flex'}}>
-         <TimeFrame timeLineWidth={this.state.timeLineWidth} style={{position: 'relative'}} duration1={duration}></TimeFrame>
+         <MemoizedComponent timeLineWidth={this.state.timeLineWidth} style={{position: 'relative'}} duration1={duration}></MemoizedComponent>
      </div>
        
       <div style={{display:'flex', position:'relative', width:`${this.state.timeLineWidth+5}px`}}>
