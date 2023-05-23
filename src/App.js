@@ -2,6 +2,7 @@ import React from 'react'
 import MM from './mm'
 import VideoPlayer from './VIdeoPlayer'
 import TimeFrame from './TimeFrameSelect'
+import Vp from './Vp'
 
 const App = () => {
   const videoLength = 100;

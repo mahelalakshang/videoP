@@ -1,18 +1,37 @@
 import React from 'react';
 import './pp.css'
 const Timeline = ({ duration1, arr1, timeLineWidth }) => {
-  const stripeCount = parseInt(duration1/10) // Number of stripes based on a 10-second interval
-                                                    //arr1 in to INT
+  const stripeCount = parseInt(duration1/20) // Number of stripes based on a 10-second interval
+                                                    //arr1 in to INT '%'
+  const reamin= duration1%10
+  const gap=timeLineWidth/stripeCount
+  const margin=timeLineWidth/duration1*20
+  
+
+  console.log("SSS",reamin,stripeCount, gap, timeLineWidth)
   const stripes = [];
+ 
 
   for (let i = 0; i <= stripeCount; i++) {
-    stripes.push(<div key={i} className="stripe" ><div style={{fontSize:'10px',position:'relative',bottom:'13px', color:'white'}}>{i*10}</div></div>);
-      
-      if(i!=stripeCount){
-        for(let j=0;j<9;j++){
-          stripes.push(<div key={Math.random()} className="stripeSmall" />);
-        }
-      }
+
+    if(i==0){
+    stripes.push(<div key={i} className="stripe" ><div style={{fontSize:'10px',position:'relative',bottom:'13px', color:'white'}}>{i*20}</div></div>);
+    }
+    else{
+    stripes.push(<div style={{marginLeft:`${margin}px`}} key={i} className="stripe" ><div style={{fontSize:'10px',position:'relative',bottom:'13px', color:'white'}}>{i*20}</div></div>);
+    }
+
+      // if(i==stripeCount){
+      //   for(let j=0;j<reamin;j++){
+      //     stripes.push(<div key={Math.random()} className="stripeSmall" />)
+      //   }
+      // }
+
+      // if(i!=stripeCount){
+      //   for(let j=0;j<19;j++){
+      //     stripes.push(<div key={Math.random()} className="stripeSmall" />);
+      //   }
+      // }
       
   }
   return( 
@@ -21,6 +40,7 @@ const Timeline = ({ duration1, arr1, timeLineWidth }) => {
       <div style={{width:`${timeLineWidth}px`,marginLeft:'2px',marginBottom:'2px'}}  className="timeline">{stripes}
         
       </div>
+
     </div>
 
   );
