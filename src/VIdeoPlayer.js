@@ -27,7 +27,7 @@ class VideoPlayer extends React.Component {
   // https://www.youtube.com/watch?v=JJmcL1N2KQs
   handlePlay = () => {
     this.setState({ playing: true });
-    this.setState({ pl: true });
+    // this.setState({ pl: true });
   };
 
   handlePause = () => {
@@ -38,20 +38,23 @@ class VideoPlayer extends React.Component {
 
   handleProgress = (progress) => {
     console.log("Progress - ",progress)
-    if(this.state.ct && this.state.pl==false){
+    if(this.state.ct){
         this.setState({ currentTime: progress.playedSeconds });
-        this.setState({ pl: true });
+        // this.setState({ pl: true });
         this.setState({ playing: false });
+        this.setState({ct:false})
     }
-    if(this.state.ct1 && this.state.pl==false){
+    if(this.state.ct1){
         this.setState({ currentTime1: progress.playedSeconds });
-        this.setState({ pl: true });
+        // this.setState({ pl: true });
         this.setState({ playing: false });
+        this.setState({ct1:false})
     }
-    if(this.state.ct2 && this.state.pl==false){
+    if(this.state.ct2){
         this.setState({ currentTime2: progress.playedSeconds });
-        this.setState({ pl: true });
+        // this.setState({ pl: true });
         this.setState({ playing: false });
+        this.setState({ct2:false})
     }
 
   };
@@ -65,7 +68,7 @@ class VideoPlayer extends React.Component {
     this.setState({ct:true})
     this.setState({ct1:false})
     this.setState({ct2:false})
-    this.setState({pl:false})
+    // this.setState({pl:false})
     // this.setState({playing:false})
     this.player.seekTo(parseFloat(e.target.value));
   };
@@ -74,7 +77,7 @@ class VideoPlayer extends React.Component {
     this.setState({ct1:true})
     this.setState({ct:false})
     this.setState({ct2:false})
-    this.setState({pl:false})
+    // this.setState({pl:false})
     // this.setState({playing:false})
     this.player.seekTo(parseFloat(e.target.value));
   };
@@ -83,7 +86,7 @@ class VideoPlayer extends React.Component {
     this.setState({ct2:true})
     this.setState({ct1:false})
     this.setState({ct:false})
-    this.setState({pl:false})
+    // this.setState({pl:false})
     // this.setState({playing:false})
     this.player.seekTo(parseFloat(e.target.value));
   };
@@ -147,14 +150,7 @@ class VideoPlayer extends React.Component {
           onProgress={this.handleProgress}
           onDuration={this.handleDuration}
         />
-
         <br></br> 
-        {/* <input className="slider2"
-          type="range"
-          min={0}
-          max={100}
-          onChange={this.changeWidthOfTimeline}
-        /> */}
         <div style={{display:'flex', marginBottom:'5px', marginLeft:'5px'}}>
           <div onClick={this.changeWidthOfTimelineZoom} style={{backgroundColor:'red', padding:'2px', width:'20px', paddingLeft:'10px',marginRight:'2px', cursor:'pointer'}}>+</div>
           <div onClick={this.changeWidthOfTimelineZoomOut} style={{backgroundColor:'black', color:'white', padding:'2px',width:'20px', paddingLeft:'15px', paddingBottom:'7px', cursor:'pointer'}}>-</div>
