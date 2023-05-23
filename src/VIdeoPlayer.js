@@ -25,10 +25,9 @@ class VideoPlayer extends React.Component {
 
     };
   }
-  // https://www.youtube.com/watch?v=JJmcL1N2KQs
+
   handlePlay = () => {
     this.setState({ playing: true });
-    // this.setState({ pl: true });
   };
 
   handlePause = () => {
@@ -38,57 +37,48 @@ class VideoPlayer extends React.Component {
 
 
   handleProgress = (progress) => {
-    console.log("Progress - ",progress)
-    if(this.state.ct){
-        this.setState({ currentTime: progress.playedSeconds });
-        // this.setState({ pl: true });
-        this.setState({ playing: false });
-        this.setState({ct:false})
-    }
-    if(this.state.ct1){
-        this.setState({ currentTime1: progress.playedSeconds });
-        // this.setState({ pl: true });
-        this.setState({ playing: false });
-        this.setState({ct1:false})
-    }
-    if(this.state.ct2){
-        this.setState({ currentTime2: progress.playedSeconds });
-        // this.setState({ pl: true });
-        this.setState({ playing: false });
-        this.setState({ct2:false})
-    }
+    // if(this.state.ct){
+    //     this.setState({ currentTime: progress.playedSeconds });
+    //     this.setState({ playing: false });
+    //     this.setState({ct:false})
+    // }
+    // if(this.state.ct1){
+    //     this.setState({ currentTime1: progress.playedSeconds });
+    //     this.setState({ playing: false });
+    //     this.setState({ct1:false})
+    // }
+    // if(this.state.ct2){
+    //     this.setState({ currentTime2: progress.playedSeconds });
+    //     this.setState({ playing: false });
+    //     this.setState({ct2:false})
+    // }
+
+    this.setState({ currentTime: progress.playedSeconds });//added
 
   };
 
   handleDuration = (duration) => {
     this.setState({ duration,timeLineWidth:3000/590*duration });
-    //  this.setState({ duration,timeLineWidth:1000 });
   };
 
   handleSeek = (e) => {
-    this.setState({ct:true})
-    this.setState({ct1:false})
-    this.setState({ct2:false})
-    // this.setState({pl:false})
-    // this.setState({playing:false})
+    // this.setState({ct:true})
+    // this.setState({ct1:false})
+    // this.setState({ct2:false})
     this.player.seekTo(parseFloat(e.target.value));
   };
 
   handleSeek1 = (e) => {
-    this.setState({ct1:true})
-    this.setState({ct:false})
-    this.setState({ct2:false})
-    // this.setState({pl:false})
-    // this.setState({playing:false})
+    // this.setState({ct1:true})
+    // this.setState({ct:false})
+    // this.setState({ct2:false})
     this.player.seekTo(parseFloat(e.target.value));
   };
 
   handleSeek2 = (e) => {
-    this.setState({ct2:true})
-    this.setState({ct1:false})
-    this.setState({ct:false})
-    // this.setState({pl:false})
-    // this.setState({playing:false})
+    // this.setState({ct2:true})
+    // this.setState({ct1:false})
+    // this.setState({ct:false})
     this.player.seekTo(parseFloat(e.target.value));
   };
 
@@ -97,11 +87,11 @@ class VideoPlayer extends React.Component {
   }
 
   selectDot2=()=>{
-    this.setState({arr2:[...this.state.arr2,this.state.currentTime1]})
+    this.setState({arr2:[...this.state.arr2,this.state.currentTime]}) //currentTime1
   }
   
   selectDot3=()=>{
-    this.setState({arr3:[...this.state.arr3,this.state.currentTime2]})
+    this.setState({arr3:[...this.state.arr3,this.state.currentTime]}) //currentTime2
   }
 
   deSelectFromArr1=()=>{
@@ -211,7 +201,7 @@ class VideoPlayer extends React.Component {
           min={0}
           max={duration}
           step="any"
-          value={currentTime1}
+          value={currentTime} // currentTime1
           onChange={this.handleSeek1}
         />
       </div>
@@ -239,7 +229,7 @@ class VideoPlayer extends React.Component {
           min={0}
           max={duration}
           step="any"
-          value={currentTime2}
+          value={currentTime}// currentTime2
           onChange={this.handleSeek2}
         />
       </div>
