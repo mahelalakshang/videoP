@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactPlayer from 'react-player';
 import './ss.css'
-import TimeFrame from './TimeFrameSelect'
 import {MemoizedComponent} from './MemoizedComponent'
+import {faSearchPlus, faMinusCircle, faPlusCircle} from '@fortawesome/free-solid-svg-icons'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
 class VideoPlayer extends React.Component {
   constructor(props) {
@@ -22,7 +23,6 @@ class VideoPlayer extends React.Component {
       arr2:[],
       arr3:[],
       timeLineWidth:3000,
-
     };
   }
 
@@ -33,8 +33,6 @@ class VideoPlayer extends React.Component {
   handlePause = () => {
     this.setState({ playing: false });
   };
-
-
 
   handleProgress = (progress) => {
     // if(this.state.ct){
@@ -52,9 +50,7 @@ class VideoPlayer extends React.Component {
     //     this.setState({ playing: false });
     //     this.setState({ct2:false})
     // }
-
     this.setState({ currentTime: progress.playedSeconds });//added
-
   };
 
   handleDuration = (duration) => {
@@ -112,20 +108,18 @@ class VideoPlayer extends React.Component {
     console.log("end", this.state.arr3.sort())
   }
   changeWidthOfTimelineZoom=(e)=>{
-    console.log(e.target.value)
-    this.setState({timeLineWidth:this.state.timeLineWidth+200})
+    this.setState({timeLineWidth:this.state.timeLineWidth+500})
   }
 
   changeWidthOfTimelineZoomOut=(e)=>{
-    console.log(e.target.value)
-      this.setState({timeLineWidth:this.state.timeLineWidth-200})
+   
+      if(this.state.timeLineWidth>2000){
+      this.setState({timeLineWidth:this.state.timeLineWidth-500})
+      }
   }
-
-
 
   render() {
     const { url, playing, currentTime, duration, currentTime1 ,currentTime2  } = this.state;
-    console.log("CurrentT - ",currentTime, currentTime1,currentTime2)
 
     return (
       <div>
@@ -142,44 +136,42 @@ class VideoPlayer extends React.Component {
           onDuration={this.handleDuration}
         />
         <br></br> 
-        <div style={{display:'flex', marginBottom:'5px', marginLeft:'5px'}}>
-          <div onClick={this.changeWidthOfTimelineZoom} style={{backgroundColor:'red', padding:'2px', width:'20px', paddingLeft:'10px',marginRight:'2px', cursor:'pointer'}}>+</div>
-          <div onClick={this.changeWidthOfTimelineZoomOut} style={{backgroundColor:'black', color:'white', padding:'2px',width:'20px', paddingLeft:'15px', paddingBottom:'7px', cursor:'pointer'}}>-</div>
+        <div style={{display:'flex', marginLeft:'5px', marginBottom:'5px'}}>
+          <div onClick={this.changeWidthOfTimelineZoom} style={{backgroundColor:'red',  cursor:'pointer', paddingTop:'8px',paddingBottom:'8px',paddingLeft:'10px',paddingRight:'10px', marginRight:'2px'}}><FontAwesomeIcon icon={faPlusCircle}></FontAwesomeIcon></div>
+          <div onClick={this.changeWidthOfTimelineZoomOut} style={{backgroundColor:'black', color:'white',paddingTop:'8px',paddingBottom:'8px',paddingLeft:'10px',paddingRight:'10px' ,cursor:'pointer'}}><FontAwesomeIcon icon={faMinusCircle}></FontAwesomeIcon></div>
         </div>
-        <br></br>
+      
       {/* ------------------------ */}  
-<div style={{display:'flex'}}>    
-<div style={{backgroundColor:'black'}} className='scroll'>  
-        <div  style={{display:'flex', marginTop:'10px',position:'relative', marginLeft:'2px',width:`${this.state.timeLineWidth}`}}>
-        {
-         this.state.arr1 && this.state.arr1.map((v,i)=>{
-          let x=v/duration*this.state.timeLineWidth 
-          x=x-v/duration*5
-            console.log("I",i)
-            return(
-              <div style={{height:'5px',width:'5px',backgroundColor:'red',position:'absolute',marginLeft:`${x}px`}}></div>
-            )
-          })
-        }  
-        </div>
-        <div  style={{display:'flex'}}>
-          <MemoizedComponent timeLineWidth={this.state.timeLineWidth} duration1={duration}></MemoizedComponent>
-       </div>
-        
-        <div style={{display:'flex', position:'relative', width:`${this.state.timeLineWidth+5}px`, paddingBottom:'8px'}}>
-           <input className="slider" id="timelineSlider" 
-           style={{height: '4px', fontSize:'4px',background: '#ccc', width:`${this.state.timeLineWidth+5}px`}}
-             type="range"
-             min={0}
-             max={duration}
-             step="any"
-             value={currentTime}
-             onChange={this.handleSeek}
-           />    
-        </div>
+        <div style={{display:'flex'}}>    
+        <div style={{backgroundColor:'black'}} className='scroll' >  
+          <div  style={{display:'flex', marginTop:'10px',position:'relative', marginLeft:'2px',width:`${this.state.timeLineWidth}`}}>
+          {
+           this.state.arr1 && this.state.arr1.map((v,i)=>{
+            let x=v/duration*this.state.timeLineWidth 
+            x=x-v/duration*5
+              return(
+                <div style={{height:'5px',width:'5px',backgroundColor:'red',position:'absolute',marginLeft:`${x}px`}}></div>
+              )
+            })
+          }  
+          </div>
+          <div  style={{display:'flex'}}>
+            <MemoizedComponent timeLineWidth={this.state.timeLineWidth} duration1={duration}></MemoizedComponent>
+         </div>     
+         <div style={{display:'flex', position:'relative', width:`${this.state.timeLineWidth+5}px`, paddingBottom:'8px'}}>
+             <input className="slider" id="timelineSlider" 
+             style={{height: '4px', fontSize:'4px',background: '#ccc', width:`${this.state.timeLineWidth+5}px`}}
+               type="range"
+               min={0}
+              max={duration}
+              step="any"
+              value={currentTime}
+              onChange={this.handleSeek}
+            />    
+         </div>
  
       {/* ------------------------ */}  
-          <div style={{display:'flex', marginLeft:'2px', marginTop:'10px',position:'relative'}}>
+         <div style={{display:'flex', marginLeft:'2px', marginTop:'10px',position:'relative'}}>
           {
            this.state.arr2 && this.state.arr2.map((v,i)=>{
             let x=v/duration*this.state.timeLineWidth  
@@ -192,22 +184,22 @@ class VideoPlayer extends React.Component {
          </div>      
         <div style={{display:'flex'}}>
           <MemoizedComponent timeLineWidth={this.state.timeLineWidth} arr1={this.arr1} duration1={duration}></MemoizedComponent>
+        </div>
+
+       <div style={{display:'flex', position:'relative',width:`${this.state.timeLineWidth+5}px`, paddingBottom:'8px'}}>
+         <input className="slider" id="timelineSlider"
+          style={{height: '4px', fontSize:'4px',background: '#ccc', width:`${this.state.timeLineWidth+5}px`}}
+           type="range"
+           min={0}
+           max={duration}
+           step="any"
+           value={currentTime} // currentTime1
+           onChange={this.handleSeek1}
+         />
        </div>
 
-      <div style={{display:'flex', position:'relative',width:`${this.state.timeLineWidth+5}px`, paddingBottom:'8px'}}>
-        <input className="slider" id="timelineSlider"
-         style={{height: '4px', fontSize:'4px',background: '#ccc', width:`${this.state.timeLineWidth+5}px`}}
-          type="range"
-          min={0}
-          max={duration}
-          step="any"
-          value={currentTime} // currentTime1
-          onChange={this.handleSeek1}
-        />
-      </div>
-
       {/* ------------------------ */}   
-          <div style={{display:'flex', marginLeft:'2px', marginTop:'10px',position:'relative'}}>
+        <div style={{display:'flex', marginLeft:'2px', marginTop:'10px',position:'relative'}}>
           {
            this.state.arr3 && this.state.arr3.map((v,i)=>{
             let x=v/duration*this.state.timeLineWidth  
@@ -220,41 +212,38 @@ class VideoPlayer extends React.Component {
          </div>  
        <div style={{display:'flex'}}>
          <MemoizedComponent timeLineWidth={this.state.timeLineWidth} style={{position: 'relative'}} duration1={duration}></MemoizedComponent>
-     </div>
-       
+       </div>   
       <div style={{display:'flex', position:'relative', width:`${this.state.timeLineWidth+5}px`}}>
-        <input className="slider" id="timelineSlider"
-         style={{height: '4px', fontSize:'4px',background: '#ccc', width:`${this.state.timeLineWidth+5}px`}}
-          type="range"
-          min={0}
-          max={duration}
-          step="any"
-          value={currentTime}// currentTime2
-          onChange={this.handleSeek2}
-        />
-      </div>
-</div> 
+         <input className="slider" id="timelineSlider"
+          style={{height: '4px', fontSize:'4px',background: '#ccc', width:`${this.state.timeLineWidth+5}px`}}
+           type="range"
+           min={0}
+           max={duration}
+           step="any"
+           value={currentTime}// currentTime2
+           onChange={this.handleSeek2}
+         />
+       </div>
+    </div> 
 
-<div >
-         <div style={{display:'flex', marginTop:'-7px'}}>
+       <div >   
+         <div style={{display:'flex', marginTop:'38px'}}>
           <div onClick={this.selectDot1} style={{height:'15px',  width:'15px', backgroundColor:'red',marginLeft:'2px'}}></div>
           <div onClick={this.deSelectFromArr1} style={{height:'15px',  width:'15px', backgroundColor:'black',marginLeft:'2px'}}></div>
          </div>
-         <div style={{display:'flex', marginTop:'40px'}}>
-         <span onClick={this.selectDot2} style={{height:'15px',  width:'15px', backgroundColor:'red',marginLeft:'2px'}}></span>
-         <span onClick={this.deSelectFromArr2} style={{height:'15px',  width:'15px', backgroundColor:'black',marginLeft:'2px'}}></span>
+         <div style={{display:'flex', marginTop:'43px'}}>
+           <span onClick={this.selectDot2} style={{height:'15px',  width:'15px', backgroundColor:'red',marginLeft:'2px'}}></span>
+           <span onClick={this.deSelectFromArr2} style={{height:'15px',  width:'15px', backgroundColor:'black',marginLeft:'2px'}}></span>
          </div>
          <div style={{display:'flex', marginTop:'42px'}}>
-         <span onClick={this.selectDot3}  style={{height:'15px',  width:'15px', backgroundColor:'red',marginLeft:'2px'}}></span>
-         <span onClick={this.deSelectFromArr3} style={{height:'15px',  width:'15px', backgroundColor:'black',marginLeft:'2px'}}></span>
-    
-         </div>
-</div>
+           <span onClick={this.selectDot3}  style={{height:'15px',  width:'15px', backgroundColor:'red',marginLeft:'2px'}}></span>
+          <span onClick={this.deSelectFromArr3} style={{height:'15px',  width:'15px', backgroundColor:'black',marginLeft:'2px'}}></span>
+        </div>
+       </div>
 
-</div>  
-
-    <br></br> <br></br>
-    <div onClick={this.show} style={{backgroundColor:'black', color:'white', width:'200px', padding:'4px'}}>Show Times</div>
+        </div>  
+         <br></br> <br></br>
+         <div onClick={this.show} style={{backgroundColor:'black', color:'white', width:'200px', padding:'4px'}}>Show Times</div>
       </div>
     );
   }
